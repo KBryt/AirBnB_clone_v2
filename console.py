@@ -31,6 +31,7 @@ class HBNBCommand(cmd.Cmd):
         """Ignore empty spaces."""
         pass
 
+<<<<<<< HEAD
     def do_quit(self, line):
         """Quit command to exit the program."""
         return True
@@ -48,6 +49,14 @@ class HBNBCommand(cmd.Cmd):
             if not line:
                 raise SyntaxError()
             my_list = line.split(" ")
+=======
+    def do_create(self, arg):
+        """Create an object of any class"""
+        try:
+            if not arg:
+                raise SyntaxError()
+            my_list = arg.split(" ")
+>>>>>>> 8c50c51ff83e22358e14895cbe790be1c5c11a93
 
             kwargs = {}
             for i in range(1, len(my_list)):
@@ -73,6 +82,14 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
         except NameError:
             print("** class doesn't exist **")
+<<<<<<< HEAD
+=======
+    
+    def help_create(self):
+        """ Help information for the create method """
+        print("Creates a class of any type")
+        print("[Usage]: create <className>\n")
+>>>>>>> 8c50c51ff83e22358e14895cbe790be1c5c11a93
 
     def do_show(self, line):
         """Prints the string representation of an instance
