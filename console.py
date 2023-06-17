@@ -49,14 +49,13 @@ class HBNBCommand(cmd.Cmd):
             if not line:
                 raise SyntaxError()
             my_list = line.split(" ")
-=======
+
     def do_create(self, arg):
         """Create an object of any class"""
         try:
             if not arg:
                 raise SyntaxError()
             my_list = arg.split(" ")
->>>>>>> 8c50c51ff83e22358e14895cbe790be1c5c11a93
 
             kwargs = {}
             for i in range(1, len(my_list)):
