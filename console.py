@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ Console Module """
+import os
 import cmd
 import sys
 from models.base_model import BaseModel
@@ -11,6 +12,12 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 
+os.environ['HBNB_ENV'] = 'dev' # dev / test / production
+os.environ['HBNB_MYSQL_USER'] = 'root' # user name
+os.environ['HBNB_MYSQL_PWD'] = 'root' # password
+os.environ['HBNB_MYSQL_HOST'] = 'localhost' # host: localhost / distant...
+os.environ['HBNB_MYSQL_DB'] = 'hbnb_dev_db' # database name
+os.environ['HBNB_TYPE_STORAGE'] = 'db' # db / file
 
 class HBNBCommand(cmd.Cmd):
     """ Contains the functionality for the HBNB console"""
@@ -73,7 +80,7 @@ class HBNBCommand(cmd.Cmd):
                 pline = pline[2].strip()  # pline is now str
                 if pline:
                     # check for *args or **kwargs
-                    if pline[0] is '{' and pline[-1] is'}'\
+                    if pline[0] == '{' and pline[-1] == '}'\
                             and type(eval(pline)) is dict:
                         _args = pline
                     else:
@@ -113,65 +120,31 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-<<<<<<< HEAD
-    def do_quit(self, line):
-        """Quit command to exit the program."""
-        return True
-
-    def do_EOF(self, line):
-        """EOF signal to exit the program."""
-        print("")
-        return True
-
-    def do_create(self, line):
-        """Usage: create <class> <key 1>=<value 2> <key 2>=<value 2> ...
-        Create a new class instance with given keys/values and print its id.
-        """
-=======
     def do_create(self, args):
+        args_splited = args.split(" ")
         """ Create an object of any class"""
->>>>>>> 8b9349798aa358e44a34e08b916141950124bdec
-        try:
-            if not args:
-                raise SyntaxError()
-<<<<<<< HEAD
-            my_list = line.split(" ")
-=======
-            my_list = args.split(" ")
->>>>>>> 8b9349798aa358e44a34e08b916141950124bdec
-
-            kwargs = {}
-            for i in range(1, len(my_list)):
-                key, value = tuple(my_list[i].split("="))
-                if value[0] == '"':
-                    value = value.strip('"').replace("_", " ")
-                else:
-                    try:
-                        value = eval(value)
-                    except (SyntaxError, NameError):
-                        continue
-                kwargs[key] = value
-
-            if kwargs == {}:
-                obj = eval(my_list[0])()
-            else:
-                obj = eval(my_list[0])(**kwargs)
-                storage.new(obj)
-            print(obj.id)
-            obj.save()
-
-        except SyntaxError:
+        if not args:
             print("** class name missing **")
-        except NameError:
+            return
+        elif args_splited[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
-<<<<<<< HEAD
-=======
+            return
+        new_instance = HBNBCommand.classes[args_splited[0]]()
+        if len(args_splited) > 1:
+            pdict = {}
+            for elem in args_splited[1:]:
+                kv = elem.split("=")
+                pdict[kv[0]] = kv[1].replace("\"", "").replace("_", " ") #ca serait bien de faire un dico sans boucle
+                # là j'ai un dico pdict (clé: valeurs) avec tout les parametres
+            for k, v in pdict.items():
+                setattr(new_instance, k, v)
+        print(new_instance.id)
+        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
         print("Creates a class of any type")
         print("[Usage]: create <className>\n")
->>>>>>> 8b9349798aa358e44a34e08b916141950124bdec
 
     def do_show(self, args):
         """ Method to show an individual object """
@@ -314,7 +287,7 @@ class HBNBCommand(cmd.Cmd):
                 args.append(v)
         else:  # isolate args
             args = args[2]
-            if args and args[0] is '\"':  # check for quoted arg
+            if args and args[0] == '\"':  # check for quoted arg
                 second_quote = args.find('\"', 1)
                 att_name = args[1:second_quote]
                 args = args[second_quote + 1:]
@@ -322,10 +295,10 @@ class HBNBCommand(cmd.Cmd):
             args = args.partition(' ')
 
             # if att_name was not quoted arg
-            if not att_name and args[0] is not ' ':
+            if not att_name and args[0] != ' ':
                 att_name = args[0]
             # check for quoted val arg
-            if args[2] and args[2][0] is '\"':
+            if args[2] and args[2][0] == '\"':
                 att_val = args[2][1:args[2].find('\"', 1)]
 
             # if att_val was not quoted arg
