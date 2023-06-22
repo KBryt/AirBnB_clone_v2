@@ -6,9 +6,6 @@ from os import getenv
 import sqlalchemy
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
-from os import environ
-
-storage_engine = environ.get("HBNB_TYPE_STORAGE")
 
 if models.storage_t == 'db':
     place_amenity = Table('place_amenity', Base.metadata,
@@ -79,4 +76,3 @@ class Place(BaseModel, Base):
                 if amenity.place_id == self.id:
                     amenity_list.append(amenity)
             return amenity_list
-

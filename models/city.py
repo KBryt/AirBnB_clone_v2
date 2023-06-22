@@ -3,13 +3,9 @@
 import models
 from models.base_model import BaseModel, Base
 from os import getenv
-from models.state import State
 import sqlalchemy
 from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
-from os import environ
-
-storage_engine = environ.get("HBNB_TYPE_STORAGE")
 
 
 class City(BaseModel, Base):

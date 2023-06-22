@@ -11,7 +11,7 @@ from models.place import Place
 from models.review import Review
 from models.state import State
 from models.user import User
-from os import environ, getenv
+from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -19,10 +19,6 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 classes = {"Amenity": Amenity, "City": City,
            "Place": Place, "Review": Review, "State": State, "User": User}
 
-HBNB_MYSQL_USER = getenv('HBNB_MYSQL_USER')
-HBNB_MYSQL_PWD = getenv('HBNB_MYSQL_PWD')
-HBNB_MYSQL_HOST = getenv('HBNB_MYSQL_HOST')
-HBNB_MYSQL_DB = getenv('HBNB_MYSQL_DB')
 
 class DBStorage:
     """interaacts with the MySQL database"""
