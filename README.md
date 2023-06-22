@@ -1210,4 +1210,3 @@ And you are good, you have a new engine!
 *   GitHub repository: `AirBnB_clone_v2`
 *   File: `models/amenity.py, models/place.py`
 
-
