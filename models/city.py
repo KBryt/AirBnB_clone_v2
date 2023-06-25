@@ -1,13 +1,12 @@
 #!/usr/bin/python
-"""Model for City class."""
-from sqlalchemy.ext.declarative import declarative_base
-from models.base_model import BaseModel, Base
-from sqlalchemy import Column, Integer, String
-from os import getenv
+""" holds class State"""
 import models
-from sqlalchemy import ForeignKey
+from models.base_model import BaseModel, Base
+from models.city import City
+from os import getenv
+import sqlalchemy
+from sqlalchemy import Column, String, ForeignKey
 from sqlalchemy.orm import relationship
-from models.place import Place
 
 class City(BaseModel, Base):
     """This is the class representation for City
@@ -16,11 +15,10 @@ class City(BaseModel, Base):
         name: input name
     """
     if models.storage_t == "db":
-        __tablename__ = "cities"
+        __tablename__ = 'cities'
         state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
         name = Column(String(128), nullable=False)
-        places = relationship("Place", delete = 'delete-orphan',
-                              backref="cities")
+        places = relationship("Place", backref="cities")
     else:
         state_id = ""
         name = ""
