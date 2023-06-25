@@ -13,7 +13,7 @@ class City(BaseModel, Base):
         state_id: The state id
         name: input name
     """
-    if models.storage == "database":
+    if models.storage_t == "db":
         __tablename__ = "cities"
         name = Column(String(128), nullable=False)
         state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
