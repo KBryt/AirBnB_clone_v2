@@ -9,7 +9,7 @@ from os import getenv
 
 class City(BaseModel, Base):
     """ The city class"""
-    if models.storage == "database":
+    if models.storage == "db":
         __tablename__ = "cities"
         state_id = Column(String(60), ForeignKey("states.id",
                           ondelete="CASCADE"), nullable=False)
