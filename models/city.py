@@ -10,11 +10,11 @@ from os import getenv
 class City(BaseModel, Base):
     """ The city class"""
     if models.storage == "database":
-        __tablename__ = "cities"
-        state_id = Column(String(60), ForeignKey("states.id",
+        __tablename__ = 'cities'
+        state_id = Column(String(60), ForeignKey('states.id',
                           ondelete="CASCADE"), nullable=False)
         name = Column(String(128), nullable=False)
-        places = relationship("Place", cascade="all, delete", backref="cities")
+        places = relationship("Place", cascade="all", delete, backref="cities")
     else:
         state_id = ""
         name = ""
